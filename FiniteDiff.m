@@ -16,11 +16,15 @@ W_surface = 300;
 T_max = [];
 T_avg = [];
 
-for N = 40
+
+for N = 4:1:8
 
     delta_x = x_dim/N; %delta_x
     delta_y = y_dim/N; %delta_y
-
+    x = 0:1/(N-1):1;
+    y = x;
+    [X,Y] = meshgrid(x,y);
+ 
 
     B = N+1:N:(N*N)-((N-1)+N);
     C = [2:1:N-1];
@@ -109,14 +113,44 @@ for N = 40
 
 
     figure();
-    surf(T,'FaceAlpha',0.5)
+    surf(X,Y,flip(T),'FaceAlpha',0.5)
     colorbar
     colormap jet
     h = colorbar;
     ylabel(h, 'Temperature (K)')
+    title("Surface Plot of Temperature (K) - " + N + "x" + N + " mesh")
+    xlabel('x-distance (m)')
+    ylabel('y-distance (m)')
+    zlabel('Temperature (K)')
+   
+
+    figure();
+    surf(X,Y,flip(T))
+    colorbar
+    colormap jet
+    h = colorbar;
+    ylabel(h, 'Temperature (K)')
+    title("Surface Plot of Temperature (K) - " + N + "x" + N + " mesh")
+    xlabel('x-distance (m)')
+    ylabel('y-distance (m)')
+    zlabel('Temperature (K)')
+    view(2)
 
     figure();
     heatmap(T)
+    title("Temperature(K) Heatmap - " + N + "x" + N + " mesh")
+    xlabel('Node Column')
+    ylabel('Node Row')
+    
+
+    figure();
+    contour(X,Y,flip(T),30,'showtext','on')
+    l = colorbar;
+    ylabel(l, 'Temperature (K)')
+    title("Contour Plot of Isotherm Lines - " + N + "x" + N + " mesh")
+    xlabel('x-distance (m)')
+    ylabel('y-distance (m)')
+
     
     tmax = max(T,[],'all');
     T_max = [T_max tmax];

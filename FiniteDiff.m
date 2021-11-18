@@ -17,7 +17,7 @@ T_max = [];
 T_avg = [];
 
 
-for N = 4:1:8
+for N = 4
 
     delta_x = x_dim/N; %delta_x
     delta_y = y_dim/N; %delta_y
@@ -38,14 +38,14 @@ for N = 4:1:8
 
     A = eye(N*N);
 
-    A(1,(N*N)+1) = 0.25*(N_surface)+0.25*(W_surface);
+    A(1,(N*N)+1) = 0.25*(W_surface)+0.25*(N_surface);
 
     for i = B
-        A(i,(N*N)+1) = .25*W_surface;
+        A(i,(N*N)+1) = .25*N_surface;
     end
 
     for i = C
-        A(i,(N*N)+1) = .25*N_surface;
+        A(i,(N*N)+1) = .25*W_surface;
     end
 
     for i = D
@@ -55,8 +55,8 @@ for N = 4:1:8
         A(i,i-1) = -0.25;
     end
 
-    A((N*N)-(N-1),(N*N)+1) = (1/3)*W_surface;
-    A(N,(N*N)+1) = (1/3)*N_surface;
+    A((N*N)-(N-1),(N*N)+1) = (1/3)*N_surface;
+    A(N,(N*N)+1) = (1/3)*W_surface;
 
     %top left node
     A(1,2) = -0.25;
@@ -113,7 +113,7 @@ for N = 4:1:8
 
 
     figure();
-    surf(X,Y,flip(T),'FaceAlpha',0.5)
+    surf(X,Y,flip(T),'FaceAlpha',0.75)
     colorbar
     colormap jet
     h = colorbar;
@@ -122,39 +122,26 @@ for N = 4:1:8
     xlabel('x-distance (m)')
     ylabel('y-distance (m)')
     zlabel('Temperature (K)')
-   
 
     figure();
-    surf(X,Y,flip(T))
-    colorbar
-    colormap jet
-    h = colorbar;
-    ylabel(h, 'Temperature (K)')
-    title("Surface Plot of Temperature (K) - " + N + "x" + N + " mesh")
-    xlabel('x-distance (m)')
-    ylabel('y-distance (m)')
-    zlabel('Temperature (K)')
-    view(2)
-
-    figure();
-    heatmap(T)
+    heatmap(T,'Colormap',jet)
     title("Temperature(K) Heatmap - " + N + "x" + N + " mesh")
     xlabel('Node Column')
     ylabel('Node Row')
     
 
-    figure();
-    contour(X,Y,flip(T),30,'showtext','on')
-    l = colorbar;
-    ylabel(l, 'Temperature (K)')
-    title("Contour Plot of Isotherm Lines - " + N + "x" + N + " mesh")
-    xlabel('x-distance (m)')
-    ylabel('y-distance (m)')
+    %figure();
+    %contour(X,Y,flip(T),30,'showtext','on')
+    %l = colorbar;
+    %ylabel(l, 'Temperature (K)')
+    %title("Contour Plot of Isotherm Lines - " + N + "x" + N + " mesh")
+    %xlabel('x-distance (m)')
+    %ylabel('y-distance (m)')
 
     
-    tmax = max(T,[],'all');
-    T_max = [T_max tmax];
+    %tmax = max(T,[],'all');
+    %T_max = [T_max tmax];
 
-    tavg = mean(T,'all');
-    T_avg = [T_avg tavg];
+    %tavg = mean(T,'all');
+    %T_avg = [T_avg tavg];
 end

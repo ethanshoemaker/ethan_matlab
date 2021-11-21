@@ -11,8 +11,8 @@ x_dim = 1; %enter x-dimension here
 y_dim = 1; %enter y-dimension here
 %N = 4; %number of nodes in each direction
 %given surface temperatures
-N_surface = 600;
-W_surface = 300;
+N_surface = 873;
+W_surface = 573;
 T_max = [];
 T_avg = [];
 
